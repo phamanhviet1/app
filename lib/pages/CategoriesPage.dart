@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 
 
 class CategoriesPage extends StatefulWidget{
-
+    final String categories;
+    CategoriesPage (@required this.categories);
   @override
   _CategoriesPageState createState() => _CategoriesPageState();
 
@@ -21,7 +22,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
              Provider.of<FoodNotifier>(context , listen: false);
     List<Food> cart = [];
        foodNotifier.foodList.forEach((element) {
-    if (element.category == "burger") {
+    if (element.category == widget.categories) {
       cart.add(element);
     }
   });
@@ -29,7 +30,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
        return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blue,
-            title: Center(child: Text("burger"),),
+            title: Center(child: Text(widget.categories),),
             leading: new IconButton(
               icon: new Icon(Icons.arrow_back),
               onPressed: () {

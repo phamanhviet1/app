@@ -7,6 +7,7 @@ import 'package:flutter_food_delivery/notifier/foodnotifier.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_food_delivery/API/foodapi.dart';
 import 'package:provider/provider.dart';
+import 'package:random_string/random_string.dart';
 import 'package:toast/toast.dart';
 class UploadCard extends StatefulWidget{
   final bool isUpdating;
@@ -23,6 +24,18 @@ class _UploadCardState extends State<UploadCard> {
   Food _currentFood;
   String _imageUrl;
   File _imageFile;
+  List<String> categories=["Burger","Pizza","Beer","Coffee","Turkey"];
+  String _key;
+  String foos = 'Select Category';
+
+
+  _collapse(String a) {
+    String newKey;
+    do {
+      _key = randomNumeric(4);
+      foos = a;
+    } while (newKey == _key);
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -126,24 +139,37 @@ class _UploadCardState extends State<UploadCard> {
     );
   }
   Widget _buildCategoryField(){
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Category'),
-      initialValue: _currentFood.category,
-      keyboardType: TextInputType.text,
-      style:  TextStyle(fontSize: 20),
-      validator: (String value){
-        if(value.isEmpty){
-          return 'Category is required';
-        }
-        if(value.length<3 || value.length >20){
-          return 'Category must 3-20';
-        }
-        return null;
-      },
-      onSaved: (String value){
-        _currentFood.category = value;
-      },
-    );
+    return ExpansionTile(
+        key: new Key(_key),
+        initiallyExpanded: false,
+        title:  widget.isUpdating?  Text(_currentFood.category):Text(foos),
+        children: [
+          Container(
+            height: 200,
+            child: ListView.separated(
+              itemBuilder: (_, index) {
+                return ListTile(
+                  title: Text(categories[index]),
+                  onTap: () {
+                    setState(() {
+                      this.foos = categories[index];
+                      _currentFood.category=categories[index];
+                      _collapse(this.foos);
+                    });
+                  },
+                );
+              },
+              itemCount: categories.length,
+              separatorBuilder: (BuildContext context, int index){
+                return Divider(color: Colors.black);
+              },
+
+            ),
+          ),
+
+        ],
+      );
+
   }
 
 

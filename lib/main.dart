@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/Screen/MainScreen.dart';
 import 'package:flutter_food_delivery/notifier/authNotifier.dart';
 import 'package:flutter_food_delivery/notifier/foodnotifier.dart';
+import 'package:flutter_food_delivery/notifier/ordernotifier.dart';
 import 'package:flutter_food_delivery/pages/SignInPage.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,9 @@ void main() => runApp(MultiProvider(
   ChangeNotifierProvider(
       create: (context) => FoodNotifier(),
     ),
-
+    ChangeNotifierProvider(
+      create: (context) => OrderNotifier(),
+    ),
   ],
   child: MyApp(),
 ));

@@ -20,8 +20,6 @@ class SignInPage extends StatefulWidget{
 }
 
 class _SignInPageState extends State<SignInPage> {
-
-
   Auth _auth = Auth();
 
 
@@ -84,7 +82,6 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     AuthNotifier authNotifier = Provider.of<AuthNotifier>(context, listen: false);
-
     // TODO: implement build
 
     return Scaffold(

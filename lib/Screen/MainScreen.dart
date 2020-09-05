@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen>{
   ProfilePage  profilePage;
   AdminPage adminPage;
   SignInPage signInPage;
-  CategoriesPage categoriesPage;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -36,7 +36,7 @@ class _MainScreenState extends State<MainScreen>{
     orderPage = OrderPage();
     profilePage = ProfilePage();
     adminPage = AdminPage();
-    categoriesPage =CategoriesPage();
+
     signInPage = SignInPage();
     pages=[ homePage , orderPage, adminPage , profilePage ];
     currentPage= pages[widget.returnPage];
@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen>{
                    Positioned(right: 0,top: 0,child: Container( decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(40)),
                     child: Text(" ${foodNotifier.cardList.length} ")))
                 ]),
-                title: Text("Order")),
+                     title: Text("Order")),
             BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.all(4.0),

@@ -5,6 +5,7 @@ import 'package:flutter_food_delivery/models/Food.dart';
 import 'package:flutter_food_delivery/models/Auth.dart';
 import 'package:flutter_food_delivery/notifier/authNotifier.dart';
 import 'package:flutter_food_delivery/notifier/foodnotifier.dart';
+import 'package:flutter_food_delivery/notifier/ordernotifier.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:io';
 import 'package:path/path.dart' as path;
@@ -159,7 +160,7 @@ UploadOrderCard(Food food, String email) async {
 
   print('Order food successfully: ${food.toString()}');
 
-  await documentRef.setData(food.toMap(), merge: true);
+  await documentRef.setData(food.toMap(), merge: true );
 }
 
 addPhone(String user,String phone) async {
@@ -184,7 +185,7 @@ addAddress(String user,String address) async {
   }
 }
 
- getOrder(FoodNotifier foodNotifier, String displayname ,List cartname) async {
+ getOrder(OrderNotifier orderNotifier, String displayname ,List cartname) async {
 
   QuerySnapshot snapshot =
       await Firestore.instance.collection(displayname).getDocuments();
@@ -195,26 +196,18 @@ addAddress(String user,String address) async {
     Food food = Food.fromMap(document.data);
 
     _foodOrder.add(food);
-    if (cartname.indexOf(food.flag) == -1 && food.flag!="1")
+  if (cartname.indexOf(food.flag) == -1 && food.flag!="1")
        cartname.add(food.flag);
 
 
   });
-      foodNotifier.orderList = _foodOrder;
+      orderNotifier.orderList = _foodOrder;
         print("ok");
        print('getcart ${cartname.length}');
 
 }
 
-getcart(FoodNotifier foodNotifier, List cartname) async  {
-  for (var i = 0; i < foodNotifier.orderList.length; i++) {
-    if (cartname.indexOf(foodNotifier.orderList[i].flag) == -1 && foodNotifier.orderList[i].flag!="1")
-      cartname.add(foodNotifier.orderList[i].flag);
-      }
-  print('getcart ${cartname.length}');
-}
-
-getInfor(FoodNotifier foodNotifier,String user) async{
+Future<Infor> getInfor(OrderNotifier orderNotifier,String user) async{
   Infor inf;
   QuerySnapshot snapshot =
   await Firestore.instance.collection(user).getDocuments();
@@ -223,8 +216,9 @@ getInfor(FoodNotifier foodNotifier,String user) async{
         inf = Infor.fromMap(document.data);
   });
 
-    if(inf==null)Firestore.instance.collection(user).document("user").setData({"flag": "1"});
-    foodNotifier.infor =inf;
-    print("infor changed ${foodNotifier.infor.flag}");
+    if(inf==null)Firestore.instance.collection(user).document("user").setData({"flag": "1","Address": "1","Phone": "1"});
+    orderNotifier.infor =inf;
+    print("infor changed ${orderNotifier.infor.flag}");
+    return inf;
 
 }

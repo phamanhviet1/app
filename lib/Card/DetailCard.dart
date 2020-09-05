@@ -10,7 +10,7 @@ import 'package:toast/toast.dart';
 class DetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FoodNotifier foodNotifier = Provider.of<FoodNotifier>(context, listen: false);
+    FoodNotifier foodNotifier = Provider.of<FoodNotifier>(context,  );
     Future<void> _refreshList() async {
       getFoods(foodNotifier);
     }

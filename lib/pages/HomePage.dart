@@ -4,6 +4,7 @@ import 'package:flutter_food_delivery/Widget/ProductFood.dart';
 import 'package:flutter_food_delivery/Widget/categories.dart';
 import 'package:flutter_food_delivery/notifier/authNotifier.dart';
 import 'package:flutter_food_delivery/notifier/foodnotifier.dart';
+import 'package:flutter_food_delivery/notifier/ordernotifier.dart';
 import 'package:flutter_food_delivery/pages/SignInPage.dart';
 import 'package:provider/provider.dart';
 
@@ -20,9 +21,10 @@ class _HomePageState extends State<HomePage>{
     // TODO: implement initState
     AuthNotifier authNotifier = Provider.of<AuthNotifier>(context, listen: false);
     initializeCurrentUser(authNotifier);
+    OrderNotifier orderNotifier =
+    Provider.of<OrderNotifier>(context,listen:false);
+    getInfor(orderNotifier, authNotifier.user.email);
     super.initState();
-
-
 
 
   }
@@ -52,15 +54,15 @@ class _HomePageState extends State<HomePage>{
                 child: Column(
                   children: <Widget>[
 
-                    FlatButton(
-                      onPressed: (){
-                        signout(authNotifier).whenComplete(() => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SignInPage())));
-                      },
-                      child: Card(child: Padding(
+                    // FlatButton(
+                    //   onPressed: (){
+                    //     signout(authNotifier).whenComplete(() => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SignInPage())));
+                    //   },
+                     Card(child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("${authNotifier.user.displayName}"),
                       )),
-                    ),
+
                     Icon(Icons.notifications_none,color: Theme.of(context).primaryColor),
                   ],
                 ),
@@ -69,27 +71,7 @@ class _HomePageState extends State<HomePage>{
               )
             ],
           ),
-          Container(
 
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(1, 1),
-                      blurRadius: 4
-                  )],
-                  borderRadius: BorderRadius.circular(20)
-              ),
-              child: ListTile(
-                leading: Icon(Icons.search,color: Colors.blueGrey,),
-                title: TextField(
-                  decoration: InputDecoration(
-                      hintText: "Search any Food",
-                      border: InputBorder.none
-                  ),
-                ),
-              )
-          ),
           SizedBox(height: 10,),
           Categories(),
           Padding(

@@ -6,7 +6,7 @@ List<Category> categoriesList =[
   Category(name: "Burger",    url: "assets/images/burger.png",    number: 12),
   Category(name: "Pizza",     url: "assets/images/pizza.png",     number: 10),
   Category(name: "Beer",      url: "assets/images/beer.png",      number: 7),
-  Category(name: "Coffee-Cup",url: "assets/images/coffee-cup.png",number: 2),
+  Category(name: "Coffee",url: "assets/images/coffee-cup.png",number: 2),
   Category(name: "Turkey",    url: "assets/images/turkey.png",    number: 9),
 ];
 
@@ -40,7 +40,7 @@ class Categories extends StatelessWidget{
                        RaisedButton(
                           color: Colors.white,
                            onPressed:() {
-                             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => CategoriesPage()));
+                             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => CategoriesPage(categoriesList[index].name.toString())));
                            },
                            child: Image.asset(categoriesList[index].url,width: 50,)
 
